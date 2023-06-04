@@ -1,0 +1,124 @@
+import java.util.ArrayList;
+import java.util.List;
+
+class Product {
+    private String name;
+    private int quantity;
+    private double price;
+
+    public Product(String name, int quantity, double price) {
+        this.name = name;
+        this.quantity = quantity;
+        this.price = price;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public int getQuantity() {
+        return quantity;
+    }
+
+    public double getPrice() {
+        return price;
+    }
+
+    public void setQuantity(int quantity) {
+        this.quantity = quantity;
+    }
+
+    public void setPrice(double price) {
+        this.price = price;
+    }
+}
+
+class Inventory {
+    private List<Product> products;
+
+    public Inventory() {
+        products = new ArrayList<>();
+    }
+
+    public void addProduct(Product product) {
+        products.add(product);
+        System.out.println(product.getName() + " added to inventory.");
+    }
+
+    public void removeProduct(Product product) {
+        products.remove(product);
+        System.out.println(product.getName() + " removed from inventory.");
+    }
+
+    public Product searchProduct(String name) {
+        for (Product product : products) {
+            if (product.getName().equalsIgnoreCase(name)) {
+                return product;
+            }
+        }
+        System.out.println(name + " not found in inventory.");
+        return null;
+    }
+
+    public void updateQuantity(Product product, int quantity) {
+        product.setQuantity(quantity);
+        System.out.println("Quantity of " + product.getName() + " updated to " + quantity + ".");
+    }
+
+    public void updatePrice(Product product, double price) {
+        product.setPrice(price);
+        System.out.println("Price of " + product.getName() + " updated to " + price + ".");
+    }
+
+    public void displayInventory() {
+        if (products.isEmpty()) {
+            System.out.println("Inventory is empty.");
+        } else {
+            System.out.println("Inventory:");
+            for (Product product : products) {
+                System.out.println("Name: " + product.getName() + ", Quantity: " + product.getQuantity() +
+                        ", Price: " + product.getPrice());
+            }
+        }
+    }
+}
+
+public class InventoryManagement {
+    public static void main(String[] args) {
+        Inventory inventory = new Inventory();
+
+        // Add products to inventory
+        Product product1 = new Product("Apple", 10, 0.5);
+        inventory.addProduct(product1);
+
+        Product product2 = new Product("Banana", 5, 0.3);
+        inventory.addProduct(product2);
+
+        Product product3 = new Product("Orange", 3, 0.2);
+        inventory.addProduct(product3);
+
+        // Display inventory
+        inventory.displayInventory();
+
+        // Update quantity of a product
+        Product product = inventory.searchProduct("Apple");
+        if (product != null) {
+            inventory.updateQuantity(product, 15);
+        }
+
+        // Update price of a product
+        product = inventory.searchProduct("Banana");
+        if (product != null) {
+            inventory.updatePrice(product, 0.35);
+        }
+
+        // Remove a product from inventory
+        product = inventory.searchProduct("Orange");
+        if (product != null) {
+            inventory.removeProduct(product);
+        }
+
+        // Display inventory again
+        inventory.displayInventory();
+    }
+}
